@@ -43,9 +43,6 @@ KeyboardInputManager.prototype.listen = function () {
                     event.shiftKey;
     var mapped    = map[event.which];
 
-    // Ignore the event if it's happening in a text field
-    if (self.targetIsInput(event)) return;
-
     if (!modifiers) {
       if (mapped !== undefined) {
         event.preventDefault();
@@ -68,25 +65,8 @@ KeyboardInputManager.prototype.listen = function () {
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
 
-<<<<<<< HEAD
   gameContainer.addEventListener("touchstart", function (event) {
     if (event.touches.length > 1) return;
-=======
-  gameContainer.addEventListener(this.eventTouchstart, function (event) {
-    if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
-        event.targetTouches > 1 ||
-        self.targetIsInput(event)) {
-      return; // Ignore if touching with more than 1 finger or touching input
-    }
-
-    if (window.navigator.msPointerEnabled) {
-      touchStartClientX = event.pageX;
-      touchStartClientY = event.pageY;
-    } else {
-      touchStartClientX = event.touches[0].clientX;
-      touchStartClientY = event.touches[0].clientY;
-    }
->>>>>>> FETCH_HEAD
 
     touchStartClientX = event.touches[0].clientX;
     touchStartClientY = event.touches[0].clientY;
@@ -97,27 +77,8 @@ KeyboardInputManager.prototype.listen = function () {
     event.preventDefault();
   });
 
-<<<<<<< HEAD
   gameContainer.addEventListener("touchend", function (event) {
     if (event.touches.length > 0) return;
-=======
-  gameContainer.addEventListener(this.eventTouchend, function (event) {
-    if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
-        event.targetTouches > 0 ||
-        self.targetIsInput(event)) {
-      return; // Ignore if still touching with one or more fingers or input
-    }
-
-    var touchEndClientX, touchEndClientY;
-
-    if (window.navigator.msPointerEnabled) {
-      touchEndClientX = event.pageX;
-      touchEndClientY = event.pageY;
-    } else {
-      touchEndClientX = event.changedTouches[0].clientX;
-      touchEndClientY = event.changedTouches[0].clientY;
-    }
->>>>>>> FETCH_HEAD
 
     var dx = event.changedTouches[0].clientX - touchStartClientX;
     var absDx = Math.abs(dx);
@@ -141,16 +102,3 @@ KeyboardInputManager.prototype.keepPlaying = function (event) {
   event.preventDefault();
   this.emit("keepPlaying");
 };
-<<<<<<< HEAD
-=======
-
-KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
-  var button = document.querySelector(selector);
-  button.addEventListener("click", fn.bind(this));
-  button.addEventListener(this.eventTouchend, fn.bind(this));
-};
-
-KeyboardInputManager.prototype.targetIsInput = function (event) {
-  return event.target.tagName.toLowerCase() === "input";
-};
->>>>>>> FETCH_HEAD
